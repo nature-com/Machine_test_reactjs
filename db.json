@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": "096d",
+      "name": "Sanchita Dutta",
+      "email": "dutta@yopmail.com",
+      "mobile": "4561236589",
+      "address": "tyrtgghuij",
+      "state": "sertyiikjfb",
+      "city": "scvdhj",
+      "postal_code": "12345",
+      "password": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+      "gender": {
+        "value": "female",
+        "label": "Female"
+      }
+    },
+    {
+      "id": "fb43",
+      "name": "subhankar das",
+      "email": "das@yopmail.com",
+      "mobile": "1235469875",
+      "address": "sdfggg",
+      "state": "sdfgh",
+      "city": "sdfgh",
+      "postal_code": "45622",
+      "password": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+      "gender": {
+        "value": "male",
+        "label": "Male"
+      }
+    }
+  ]
+}
