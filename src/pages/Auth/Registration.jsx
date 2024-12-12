@@ -20,7 +20,24 @@ const Registration = () => {
 
     const onSubmit = async (data) => {
         try {
-            const hashedPassword = encryptPassword(data.password);
+            const getJson = await fetch("http://localhost:3001/users");
+            const users = await getJson?.json();
+
+            const isEmailExist = users?.some((user) => user?.email === data?.email);
+            const isMobileExist = users?.some((user) => user?.mobile === data?.mobile);
+
+            if (isEmailExist) {
+                alert("The email already exists. Please use a different email.");
+                return;
+            }
+
+            if (isMobileExist) {
+                alert("The mobile number already exists. Please use a different mobile number.");
+                return;
+            }
+
+
+            const hashedPassword = encryptPassword(data?.password);
 
             const newUser = {
                 ...data,
@@ -35,7 +52,7 @@ const Registration = () => {
                 body: JSON.stringify(newUser),
             });
 
-            if (response.ok) {
+            if (response?.ok) {
                 alert("Registration successful!");
                 navigate("/login");
             } else {
@@ -58,9 +75,7 @@ const Registration = () => {
                         <h3 className="text-3xl font-bold text-purple-600">
                             Register to our site
                         </h3>
-                        <p className="text-gray-500 text-sm mt-1">
-                            Create an account to enjoy our services!
-                        </p>
+
                     </div>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <div>
@@ -80,7 +95,7 @@ const Registration = () => {
                             />
                             {errors?.name?.message && (
                                 <small className="text-red-600">
-                                    {errors.name.message}
+                                    {errors?.name?.message}
                                 </small>
                             )}
                         </div>
@@ -104,7 +119,7 @@ const Registration = () => {
                                 })}
                             />
                             {errors?.email?.message && (
-                                <small className="text-red-600">{errors.email.message}</small>
+                                <small className="text-red-600">{errors?.email?.message}</small>
                             )}
                         </div>
                         <div>
@@ -127,7 +142,7 @@ const Registration = () => {
                             />
                             {errors?.mobile?.message && (
                                 <small className="text-red-600">
-                                    {errors.mobile.message}
+                                    {errors?.mobile?.message}
                                 </small>
                             )}
                         </div>
@@ -150,7 +165,7 @@ const Registration = () => {
                             />
                             {errors?.gender?.message && (
                                 <small className="text-red-600">
-                                    {errors.gender.message}
+                                    {errors?.gender?.message}
                                 </small>
                             )}
                         </div>
@@ -171,7 +186,7 @@ const Registration = () => {
                             />
                             {errors?.address?.message && (
                                 <small className="text-red-600">
-                                    {errors.address.message}
+                                    {errors?.address?.message}
                                 </small>
                             )}
                         </div>
@@ -192,7 +207,7 @@ const Registration = () => {
                             />
                             {errors?.state?.message && (
                                 <small className="text-red-600">
-                                    {errors.state.message}
+                                    {errors?.state?.message}
                                 </small>
                             )}
                         </div>
@@ -213,7 +228,7 @@ const Registration = () => {
                             />
                             {errors?.city?.message && (
                                 <small className="text-red-600">
-                                    {errors.city.message}
+                                    {errors?.city?.message}
                                 </small>
                             )}
                         </div>
@@ -234,7 +249,7 @@ const Registration = () => {
                             />
                             {errors?.postal_code?.message && (
                                 <small className="text-red-600">
-                                    {errors.postal_code.message}
+                                    {errors?.postal_code?.message}
                                 </small>
                             )}
                         </div>
@@ -258,7 +273,7 @@ const Registration = () => {
                             />
                             {errors?.password?.message && (
                                 <small className="text-red-600">
-                                    {errors.password.message}
+                                    {errors?.password?.message}
                                 </small>
                             )}
                         </div>

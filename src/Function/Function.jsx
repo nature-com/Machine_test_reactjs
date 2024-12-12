@@ -9,34 +9,30 @@ const FindUniqueIntegers = () => {
         setInput(e.target.value);
     };
 
-    const handleFindUniqueIntegers = () => {
+    const handleUniqueIntegers = () => {
         try {
             const parsedArrays = JSON.parse(input);
 
-            if (!Array.isArray(parsedArrays) || !parsedArrays.every(arr => Array.isArray(arr))) {
+            if (!Array.isArray(parsedArrays) || !parsedArrays.every(Array.isArray)) {
                 alert("Please enter a valid JSON array of arrays (e.g., [[1, 2], [2, 3], [4]])");
                 return;
             }
 
             setArrays(parsedArrays);
 
-            const allIntegers = parsedArrays.flat();
+            const countMap = parsedArrays.flat().reduce((map, num) => {
+                map[num] = (map[num] || 0) + 1;
+                return map;
+            }, {});
 
-            const countMap = new Map();
-            allIntegers.forEach(num => {
-                countMap.set(num, (countMap.get(num) || 0) + 1);
-            });
-
-            const unique = [];
-            countMap.forEach((count, num) => {
-                if (count === 1) {
-                    unique.push(num);
-                }
-            });
+            const unique = Object.keys(countMap)
+                .filter((num) => countMap[num] === 1)
+                .map(Number);
 
             setUniqueIntegers(unique);
         } catch (error) {
-            alert(error);
+            console.error(error);
+            alert("Invalid input. Please ensure the format is correct.");
         }
     };
 
@@ -54,7 +50,7 @@ const FindUniqueIntegers = () => {
                     className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring focus:ring-blue-300"
                 />
                 <button
-                    onClick={handleFindUniqueIntegers}
+                    onClick={handleUniqueIntegers}
                     className="w-full bg-blue-500 text-white font-semibold py-2 mt-4 rounded-lg hover:bg-blue-600 transition"
                 >
                     Find Unique Integers

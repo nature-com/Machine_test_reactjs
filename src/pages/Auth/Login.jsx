@@ -6,39 +6,18 @@ const Login = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    // const onSubmit = (data) => {
-    //     const { identifier, password } = data;
-
-    //     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-    //     const hashedPassword = encryptPassword(password);
-
-    //     const user = storedUsers.find(
-    //         (user) =>
-    //             (user.email === identifier || user.mobile === identifier) &&
-    //             user.password === hashedPassword
-    //     );
-
-    //     if (user) {
-    //         alert("Login successful!");
-    //         navigate("/dashboard");
-    //     } else {
-    //         alert("Invalid email/mobile or password. Please try again.");
-    //     }
-    // };
-
     const onSubmit = async (data) => {
         const { identifier, password } = data;
         const hashedPassword = encryptPassword(password);
 
         try {
             const response = await fetch("http://localhost:3001/users");
-            const users = await response.json();
+            const users = await response?.json();
 
-            const user = users.find(
+            const user = users?.find(
                 (user) =>
-                    (user.email === identifier || user.mobile === identifier) &&
-                    user.password === hashedPassword
+                    (user?.email === identifier || user?.mobile === identifier) &&
+                    user?.password === hashedPassword
             );
 
             if (user) {
@@ -81,19 +60,19 @@ const Login = () => {
                                 {...register("identifier", {
                                     required: "This field is required",
                                     validate: (value) => {
-                                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                                        const mobileRegex = /^\d{10}$/;
+                                        const emailVal = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                        const mobileVal = /^\d{10}$/;
                                         return (
-                                            emailRegex.test(value) ||
-                                            mobileRegex.test(value) ||
+                                            emailVal.test(value) ||
+                                            mobileVal.test(value) ||
                                             "Enter a valid email or mobile number"
                                         );
                                     },
                                 })}
                             />
-                            {errors.identifier && (
+                            {errors?.identifier && (
                                 <p className="text-red-500 text-sm mt-1">
-                                    {errors.identifier.message}
+                                    {errors?.identifier?.message}
                                 </p>
                             )}
                         </div>
@@ -116,8 +95,8 @@ const Login = () => {
                                     },
                                 })}
                             />
-                            {errors.password && (
-                                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+                            {errors?.password && (
+                                <p className="text-red-500 text-sm mt-1">{errors?.password?.message}</p>
                             )}
                         </div>
                         <button
